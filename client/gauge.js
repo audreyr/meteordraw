@@ -14,7 +14,7 @@ if (Meteor.is_client) {
 
   Meteor.subscribe('graphs', function () {
     if (!Session.get('graph_id')) {
-    console.log("no graph id value in session, doing nothing for now");
+      console.log("no graph id value in session, doing nothing for now");
       var graph = Graphs.findOne({}, {sort: {name: 1}});
       if (graph) {
         Router.setGraph(graph._id);
@@ -27,7 +27,7 @@ if (Meteor.is_client) {
   Meteor.autosubscribe(function () {
     var graph_id = Session.get('selected_graph');
     if (graph_id)
-		Meteor.subscribe('circles', graph_id);
+      Meteor.subscribe('circles', graph_id);
   });
 
   var draw_circle = function (cx, cy) {
