@@ -23,11 +23,16 @@ if (Meteor.is_client) {
     }
   });
 
+  Meteor.subscribe('circles', Session.get('graph_id'), function () {
+    console.log("Should have gotten a new circle."); // Why is this not working?
+  });
+
 // Always be subscribed to the todos for the selected list.
   Meteor.autosubscribe(function () {
     var graph_id = Session.get('selected_graph');
     if (graph_id)
       Meteor.subscribe('circles', graph_id);
+    console.log("autosubscribe!!!");
   });
 
   var draw_circle = function (cx, cy) {
@@ -112,6 +117,7 @@ var GraphRouter = Backbone.Router.extend({
   },
   setGraph: function (graph_id) {
     this.navigate(graph_id, true);
+    console.log("A new graph was set. Time to draw circles.");
   }
 });
 
