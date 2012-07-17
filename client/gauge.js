@@ -7,26 +7,26 @@ console.log("Audrey test");
 if (Meteor.is_client) {
 
   Template.gauge.drawsomething = function () {
-	  d3.select('h1').style("color", "green");
+    d3.select('h1').style("color", "green");
   };
   // ID of currently selected graph
   Session.set('graph_id', null);
 
   Meteor.subscribe('graphs', function () {
     if (!Session.get('graph_id')) {
-	  console.log("no graph id value in session, doing nothing for now");
+    console.log("no graph id value in session, doing nothing for now");
       var graph = Graphs.findOne({}, {sort: {name: 1}});
       if (graph) {
         Router.setGraph(graph._id);
         Session.set("selected_graph", graph._id);
-	  }
+      }
     }
   });
 
 // Always be subscribed to the todos for the selected list.
   Meteor.autosubscribe(function () {
-	  var graph_id = Session.get('selected_graph');
-	  if (graph_id)
+    var graph_id = Session.get('selected_graph');
+    if (graph_id)
 		Meteor.subscribe('circles', graph_id);
   });
 
@@ -53,9 +53,9 @@ if (Meteor.is_client) {
       console.log("You clicked!");
 
       Circles.insert({
-	          graph_id: Session.get('selected_graph'),
-	          cx: event.layerX,
-	          cy: event.layerY }) ;
+            graph_id: Session.get('selected_graph'),
+            cx: event.layerX,
+            cy: event.layerY }) ;
     }
   };
 
@@ -75,13 +75,13 @@ if (Meteor.is_client) {
   };
 
    Template.graph_list.graph_all = function () {
-	 console.log("template function: graph_all");
+    console.log("template function: graph_all");
      return Graphs.find({}, {});
    };
 
    Template.graph_list.events = {
     'click': function () {
-	  console.log("Click event selecting Graph:"+this._id);
+    console.log("Click event selecting Graph:"+this._id);
       Session.set("selected_graph", this._id);
       Router.setGraph(this._id);
     }
@@ -89,7 +89,7 @@ if (Meteor.is_client) {
 
   Template.add_graph.events = {
 	'click input.add': function () {
-	  var text = jQuery('#new-graph').val();
+      var text = jQuery('#new-graph').val();
       var id = Graphs.insert({name: text});
       Router.setGraph(id);
       Session.set("selected_graph", id);
